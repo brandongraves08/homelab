@@ -9,7 +9,13 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: applications
+    directory:
+      recurse: true
+      jsonnet: {}
+      include:
+        - "applications/*.yaml"
+        - "routes/*.yaml"
+    path: .
     repoURL: https://github.com/brandongraves08/homelab.git
     targetRevision: HEAD
   syncPolicy:
