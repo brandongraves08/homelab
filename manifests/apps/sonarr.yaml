@@ -10,7 +10,7 @@ spec:
   project: default
   source:
     chart: sonarr
-    repoURL: oci://tccr.io/truecharts
+    repoURL: https://charts.truecharts.org/
     targetRevision: 17.0.28
     helm:
       values: |

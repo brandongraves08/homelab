@@ -10,7 +10,7 @@ spec:
   project: default
   source:
     chart: plex
-    repoURL: oci://tccr.io/truecharts
+    repoURL: https://charts.truecharts.org/
     targetRevision: 12.1.2
     helm:
       values: |

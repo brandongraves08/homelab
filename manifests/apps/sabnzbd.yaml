@@ -10,7 +10,7 @@ spec:
   project: default
   source:
     chart: sabnzbd
-    repoURL: oci://tccr.io/truecharts
+    repoURL: https://charts.truecharts.org/
     targetRevision: 14.0.27
     helm:
       values: |
