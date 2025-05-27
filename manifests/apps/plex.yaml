@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: plex
+  namespace: media
+spec:
+  destination:
+    namespace: media
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    chart: plex
+    repoURL: oci://tccr.io/truecharts
+    targetRevision: 12.1.2
+    helm:
+      valueFiles:
+        - ../../charts/values/plex-values.yaml
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=false
