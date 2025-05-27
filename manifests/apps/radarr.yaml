@@ -9,9 +9,8 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    chart: radarr
     repoURL: https://github.com/truecharts/charts.git
-    targetRevision: stable
+    targetRevision: main
     path: charts/stable/radarr
     helm:
       values: |
