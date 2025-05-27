@@ -10,8 +10,9 @@ spec:
   project: default
   source:
     chart: sabnzbd
-    repoURL: https://charts.truecharts.org/
-    targetRevision: 14.0.27
+    repoURL: https://github.com/truecharts/charts.git
+    targetRevision: stable
+    path: charts/stable/sabnzbd
     helm:
       values: |
         image:

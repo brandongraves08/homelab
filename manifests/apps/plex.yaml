@@ -10,8 +10,9 @@ spec:
   project: default
   source:
     chart: plex
-    repoURL: https://charts.truecharts.org/
-    targetRevision: 12.1.2
+    repoURL: https://github.com/truecharts/charts.git
+    targetRevision: stable
+    path: charts/stable/plex
     helm:
       values: |
         image:
