@@ -11,19 +11,7 @@ spec:
   resources:
     requests:
       storage: 10Gi
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: plex-media
-  namespace: media
-spec:
-  accessModes:
-    - ReadWriteOnce
-  storageClassName: lvms-vg1
-  resources:
-    requests:
-      storage: 500Gi
+# Using NFS for Plex media storage instead of local storage
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -50,16 +38,4 @@ spec:
   resources:
     requests:
       storage: 2Gi
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: media-library
-  namespace: media
-spec:
-  accessModes:
-    - ReadWriteOnce
-  storageClassName: lvms-vg1
-  resources:
-    requests:
-      storage: 1000Gi
+# Using NFS for media storage instead of local storage
