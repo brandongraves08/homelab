@@ -23,7 +23,7 @@ persistence:
     enabled: true
     type: pvc
     mountPath: /data
-    existingClaim: plex-media
+    existingClaim: media-nfs-pvc
     
 resources:
   limits:

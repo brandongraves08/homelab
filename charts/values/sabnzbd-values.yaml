@@ -15,13 +15,13 @@ persistence:
     enabled: true
     type: pvc
     mountPath: /config
-    existingClaim: media-library
+    existingClaim: media-nfs-pvc
     subPath: sabnzbd/config
   media:
     enabled: true
     type: pvc
     mountPath: /data/downloads
-    existingClaim: media-library
+    existingClaim: media-nfs-pvc
     subPath: downloads
 
 resources:

@@ -20,7 +20,7 @@ persistence:
     enabled: true
     type: pvc
     mountPath: /data
-    existingClaim: media-library
+    existingClaim: media-nfs-pvc
 
 resources:
   limits:
