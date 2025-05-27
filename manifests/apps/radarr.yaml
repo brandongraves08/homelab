@@ -10,8 +10,9 @@ spec:
   project: default
   source:
     chart: radarr
-    repoURL: https://charts.truecharts.org/
-    targetRevision: 17.0.25
+    repoURL: https://github.com/truecharts/charts.git
+    targetRevision: stable
+    path: charts/stable/radarr
     helm:
       values: |
         image:

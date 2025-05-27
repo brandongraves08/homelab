@@ -10,8 +10,9 @@ spec:
   project: default
   source:
     chart: sonarr
-    repoURL: https://charts.truecharts.org/
-    targetRevision: 17.0.28
+    repoURL: https://github.com/truecharts/charts.git
+    targetRevision: stable
+    path: charts/stable/sonarr
     helm:
       values: |
         image:
