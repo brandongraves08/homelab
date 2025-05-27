@@ -1,0 +1,267 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: local-apps-repo
+  namespace: media
+data:
+  plex.yaml: |
+    apiVersion: argoproj.io/v1alpha1
+    kind: Application
+    metadata:
+      name: plex
+      namespace: media
+    spec:
+      destination:
+        namespace: media
+        server: https://kubernetes.default.svc
+      project: default
+      source:
+        chart: plex
+        repoURL: oci://tccr.io/truecharts
+        targetRevision: 12.1.2
+        helm:
+          values: |
+            image:
+              repository: tccr.io/truecharts/plex
+              tag: v1.40.0.7998-c29d46c0d@sha256:6d6e12d2388268b64ae0d0ec0cfee99293a17a6b67ef9a5ca8df02a1de4cdcf1
+            
+            service:
+              main:
+                type: NodePort
+                ports:
+                  main:
+                    port: 32400
+                    nodePort: 32400
+            
+            plex:
+              claimToken: "claim-REPLACE_WITH_YOUR_TOKEN"
+            
+            persistence:
+              config:
+                enabled: true
+                type: pvc
+                mountPath: /config
+                existingClaim: plex-config
+              media:
+                enabled: true
+                type: pvc
+                mountPath: /data
+                existingClaim: plex-media
+                
+            resources:
+              limits:
+                cpu: 4000m
+                memory: 8Gi
+              requests:
+                cpu: 2000m
+                memory: 4Gi
+            
+            networkPolicy:
+              enabled: false
+            
+            securityContext:
+              container:
+                runAsNonRoot: false
+                readOnlyRootFilesystem: false
+                runAsUser: 0
+                runAsGroup: 0
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=false
+  radarr.yaml: |
+    apiVersion: argoproj.io/v1alpha1
+    kind: Application
+    metadata:
+      name: radarr
+      namespace: media
+    spec:
+      destination:
+        namespace: media
+        server: https://kubernetes.default.svc
+      project: default
+      source:
+        chart: radarr
+        repoURL: oci://tccr.io/truecharts
+        targetRevision: 17.0.25
+        helm:
+          values: |
+            image:
+              repository: tccr.io/truecharts/radarr
+              tag: v5.2.4.8328@sha256:e715df7bcec954dc2e38f73ef4a6eda44cb8df8a4cd5a0deb901c50e69d3a0f8
+            
+            service:
+              main:
+                type: NodePort
+                ports:
+                  main:
+                    port: 7878
+                    nodePort: 30878
+            
+            persistence:
+              config:
+                enabled: true
+                type: pvc
+                mountPath: /config
+                existingClaim: radarr-config
+              media:
+                enabled: true
+                type: pvc
+                mountPath: /data
+                existingClaim: media-library
+            
+            resources:
+              limits:
+                cpu: 1000m
+                memory: 1Gi
+              requests:
+                cpu: 500m
+                memory: 512Mi
+            
+            networkPolicy:
+              enabled: false
+            
+            securityContext:
+              container:
+                runAsNonRoot: false
+                readOnlyRootFilesystem: false
+                runAsUser: 0
+                runAsGroup: 0
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=false
+  sonarr.yaml: |
+    apiVersion: argoproj.io/v1alpha1
+    kind: Application
+    metadata:
+      name: sonarr
+      namespace: media
+    spec:
+      destination:
+        namespace: media
+        server: https://kubernetes.default.svc
+      project: default
+      source:
+        chart: sonarr
+        repoURL: oci://tccr.io/truecharts
+        targetRevision: 17.0.28
+        helm:
+          values: |
+            image:
+              repository: tccr.io/truecharts/sonarr
+              tag: v4.0.0.798@sha256:9daa15eb85e8c3cb5cb9c243c0168ea45b86ab4a7d8bee7c84a3e0f16e6f3f10
+            
+            service:
+              main:
+                type: NodePort
+                ports:
+                  main:
+                    port: 8989
+                    nodePort: 30989
+            
+            persistence:
+              config:
+                enabled: true
+                type: pvc
+                mountPath: /config
+                existingClaim: sonarr-config
+              media:
+                enabled: true
+                type: pvc
+                mountPath: /data
+                existingClaim: media-library
+            
+            resources:
+              limits:
+                cpu: 1000m
+                memory: 1Gi
+              requests:
+                cpu: 500m
+                memory: 512Mi
+            
+            networkPolicy:
+              enabled: false
+            
+            securityContext:
+              container:
+                runAsNonRoot: false
+                readOnlyRootFilesystem: false
+                runAsUser: 0
+                runAsGroup: 0
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=false
+  sabnzbd.yaml: |
+    apiVersion: argoproj.io/v1alpha1
+    kind: Application
+    metadata:
+      name: sabnzbd
+      namespace: media
+    spec:
+      destination:
+        namespace: media
+        server: https://kubernetes.default.svc
+      project: default
+      source:
+        chart: sabnzbd
+        repoURL: oci://tccr.io/truecharts
+        targetRevision: 14.0.27
+        helm:
+          values: |
+            image:
+              repository: tccr.io/truecharts/sabnzbd
+              tag: v4.2.0@sha256:b7e1de35f8a10f6f1a16dc8d5ae6b2b78fd91f6c8b8f2591ab3f5c4a67d0aa81
+            
+            service:
+              main:
+                type: NodePort
+                ports:
+                  main:
+                    port: 8080
+                    nodePort: 30080
+            
+            persistence:
+              config:
+                enabled: true
+                type: pvc
+                mountPath: /config
+                existingClaim: media-library
+                subPath: sabnzbd/config
+              media:
+                enabled: true
+                type: pvc
+                mountPath: /data/downloads
+                existingClaim: media-library
+                subPath: downloads
+            
+            resources:
+              limits:
+                cpu: 1000m
+                memory: 1Gi
+              requests:
+                cpu: 500m
+                memory: 512Mi
+            
+            networkPolicy:
+              enabled: false
+            
+            securityContext:
+              container:
+                runAsNonRoot: false
+                readOnlyRootFilesystem: false
+                runAsUser: 0
+                runAsGroup: 0
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=false

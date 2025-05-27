@@ -1,0 +1,41 @@
+image:
+  repository: tccr.io/truecharts/sonarr
+  tag: v4.0.0.798@sha256:9daa15eb85e8c3cb5cb9c243c0168ea45b86ab4a7d8bee7c84a3e0f16e6f3f10
+
+service:
+  main:
+    type: NodePort
+    ports:
+      main:
+        port: 8989
+        nodePort: 30989
+
+persistence:
+  config:
+    enabled: true
+    type: pvc
+    mountPath: /config
+    existingClaim: sonarr-config
+  media:
+    enabled: true
+    type: pvc
+    mountPath: /data
+    existingClaim: media-library
+
+resources:
+  limits:
+    cpu: 1000m
+    memory: 1Gi
+  requests:
+    cpu: 500m
+    memory: 512Mi
+
+networkPolicy:
+  enabled: false
+
+securityContext:
+  container:
+    runAsNonRoot: false
+    readOnlyRootFilesystem: false
+    runAsUser: 0
+    runAsGroup: 0

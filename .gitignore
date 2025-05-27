@@ -1,0 +1,23 @@
+# Credentials and secrets
+credentials.md
+*.pem
+*.key
+*.crt
+kubeconfig
+
+# Environment files
+.env
+.env.local
+
+# OS specific files
+.DS_Store
+Thumbs.db
+
+# IDE and editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Logs
+*.log

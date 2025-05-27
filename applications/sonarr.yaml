@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: sonarr
+  namespace: media
+spec:
+  destination:
+    namespace: media
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    chart: sonarr
+    repoURL: oci://tccr.io/truecharts
+    targetRevision: 17.0.28
+    helm:
+      valueFiles:
+        - ../charts/values/sonarr-values.yaml
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=false
