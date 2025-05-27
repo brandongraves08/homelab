@@ -9,15 +9,18 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
+    path: .
+    repoURL: https://github.com/brandongraves08/homelab.git
+    targetRevision: HEAD
     directory:
       recurse: true
       jsonnet: {}
       include:
-        - "applications/*.yaml"
-        - "routes/*.yaml"
-    path: .
-    repoURL: https://github.com/brandongraves08/homelab.git
-    targetRevision: HEAD
+        - applications/plex.yaml
+        - applications/radarr.yaml
+        - applications/sonarr.yaml
+        - applications/sabnzbd.yaml
+        - routes/*.yaml
   syncPolicy:
     syncOptions:
       - CreateNamespace=false
