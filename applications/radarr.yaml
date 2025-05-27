@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: radarr
+  namespace: media
+spec:
+  destination:
+    namespace: media
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    chart: radarr
+    repoURL: oci://tccr.io/truecharts
+    targetRevision: 17.0.25
+    helm:
+      valueFiles:
+        - ../charts/values/radarr-values.yaml
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=false

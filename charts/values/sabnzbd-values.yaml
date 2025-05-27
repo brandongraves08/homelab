@@ -1,0 +1,43 @@
+image:
+  repository: tccr.io/truecharts/sabnzbd
+  tag: v4.2.0@sha256:b7e1de35f8a10f6f1a16dc8d5ae6b2b78fd91f6c8b8f2591ab3f5c4a67d0aa81
+
+service:
+  main:
+    type: NodePort
+    ports:
+      main:
+        port: 8080
+        nodePort: 30080
+
+persistence:
+  config:
+    enabled: true
+    type: pvc
+    mountPath: /config
+    existingClaim: media-library
+    subPath: sabnzbd/config
+  media:
+    enabled: true
+    type: pvc
+    mountPath: /data/downloads
+    existingClaim: media-library
+    subPath: downloads
+
+resources:
+  limits:
+    cpu: 1000m
+    memory: 1Gi
+  requests:
+    cpu: 500m
+    memory: 512Mi
+
+networkPolicy:
+  enabled: false
+
+securityContext:
+  container:
+    runAsNonRoot: false
+    readOnlyRootFilesystem: false
+    runAsUser: 0
+    runAsGroup: 0
