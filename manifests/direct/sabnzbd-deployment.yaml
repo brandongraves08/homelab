@@ -17,10 +17,7 @@ spec:
       - name: sabnzbd
         image: tccr.io/truecharts/sabnzbd:v4.2.0@sha256:b7e1de35f8a10f6f1a16dc8d5ae6b2b78fd91f6c8b8f2591ab3f5c4a67d0aa81
         securityContext:
-          allowPrivilegeEscalation: false
-          capabilities:
-            drop: ["ALL"]
-          runAsNonRoot: true
+          privileged: true
         ports:
         - containerPort: 8080
           name: web

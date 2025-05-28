@@ -17,10 +17,7 @@ spec:
       - name: plex
         image: tccr.io/truecharts/plex:v1.40.0.7998-c29d46c0d@sha256:6d6e12d2388268b64ae0d0ec0cfee99293a17a6b67ef9a5ca8df02a1de4cdcf1
         securityContext:
-          allowPrivilegeEscalation: false
-          capabilities:
-            drop: ["ALL"]
-          runAsNonRoot: true
+          privileged: true
         ports:
         - containerPort: 32400
           name: web
