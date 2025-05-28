@@ -11,7 +11,7 @@ spec:
   source:
     repoURL: https://github.com/brandongraves08/homelab.git
     targetRevision: HEAD
-    path: manifests
+    path: manifests/direct
   syncPolicy:
     automated:
       prune: true

@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sonarr
+  namespace: media
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sonarr
+  template:
+    metadata:
+      labels:
+        app: sonarr
+    spec:
+      containers:
+      - name: sonarr
+        image: tccr.io/truecharts/sonarr:v4.0.0.798@sha256:9daa15eb85e8c3cb5cb9c243c0168ea45b86ab4a7d8bee7c84a3e0f16e6f3f10
+        securityContext:
+          runAsUser: 0
+          runAsGroup: 0
+        ports:
+        - containerPort: 8989
+          name: web
+        resources:
+          limits:
+            cpu: "1"
+            memory: 1Gi
+          requests:
+            cpu: "0.5"
+            memory: 512Mi
+        volumeMounts:
+        - name: config
+          mountPath: /config
+        - name: media
+          mountPath: /data
+      volumes:
+      - name: config
+        persistentVolumeClaim:
+          claimName: sonarr-config
+      - name: media
+        persistentVolumeClaim:
+          claimName: media-nfs-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sonarr
+  namespace: media
+spec:
+  type: NodePort
+  ports:
+  - port: 8989
+    targetPort: web
+    nodePort: 30989
+    name: web
+  selector:
+    app: sonarr
