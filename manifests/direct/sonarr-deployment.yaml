@@ -17,8 +17,10 @@ spec:
       - name: sonarr
         image: tccr.io/truecharts/sonarr:v4.0.0.798@sha256:9daa15eb85e8c3cb5cb9c243c0168ea45b86ab4a7d8bee7c84a3e0f16e6f3f10
         securityContext:
-          runAsUser: 0
-          runAsGroup: 0
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop: ["ALL"]
+          runAsNonRoot: true
         ports:
         - containerPort: 8989
           name: web

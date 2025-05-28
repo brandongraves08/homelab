@@ -17,8 +17,10 @@ spec:
       - name: radarr
         image: tccr.io/truecharts/radarr:v5.2.4.8328@sha256:e715df7bcec954dc2e38f73ef4a6eda44cb8df8a4cd5a0deb901c50e69d3a0f8
         securityContext:
-          runAsUser: 0
-          runAsGroup: 0
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop: ["ALL"]
+          runAsNonRoot: true
         ports:
         - containerPort: 7878
           name: web
