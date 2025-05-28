@@ -13,6 +13,9 @@ spec:
       labels:
         app: sonarr
     spec:
+      securityContext:
+        fsGroup: 65534
+        supplementalGroups: [65534]
       containers:
       - name: sonarr
         image: tccr.io/truecharts/sonarr:v4.0.0.798@sha256:9daa15eb85e8c3cb5cb9c243c0168ea45b86ab4a7d8bee7c84a3e0f16e6f3f10
