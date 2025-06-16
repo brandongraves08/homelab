@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: homelab-base
+  namespace: openshift-gitops
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/brandongraves08/homelab.git
+    targetRevision: HEAD
+    path: openshift/base
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: media
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
