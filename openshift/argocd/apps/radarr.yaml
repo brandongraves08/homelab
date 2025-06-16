@@ -1,0 +1,41 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: radarr
+  namespace: openshift-gitops
+spec:
+  project: homelab
+  source:
+    repoURL: https://k8s-at-home.com/charts/
+    chart: radarr
+    targetRevision: 15.0.0
+    helm:
+      values: |
+        env:
+          TZ: America/Chicago
+        image:
+          tag: latest
+        ingress:
+          enabled: true
+          hosts:
+            - host: radarr.homelab.lan
+              paths:
+                - /
+          annotations:
+            route.openshift.io/termination: edge
+        persistence:
+          config:
+            enabled: true
+            existingClaim: radarr-config
+          media:
+            enabled: true
+            existingClaim: media
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: media
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
