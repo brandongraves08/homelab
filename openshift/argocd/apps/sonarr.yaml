@@ -1,0 +1,41 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: sonarr
+  namespace: openshift-gitops
+spec:
+  project: homelab
+  source:
+    repoURL: https://k8s-at-home.com/charts/
+    chart: sonarr
+    targetRevision: 16.0.0
+    helm:
+      values: |
+        env:
+          TZ: America/Chicago
+        image:
+          tag: latest
+        ingress:
+          enabled: true
+          hosts:
+            - host: sonarr.homelab.lan
+              paths:
+                - /
+          annotations:
+            route.openshift.io/termination: edge
+        persistence:
+          config:
+            enabled: true
+            existingClaim: sonarr-config
+          media:
+            enabled: true
+            existingClaim: media
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: media
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
