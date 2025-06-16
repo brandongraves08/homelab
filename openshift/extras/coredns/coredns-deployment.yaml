@@ -13,6 +13,8 @@ spec:
       labels:
         app: coredns
     spec:
+      hostNetwork: true
+      dnsPolicy: Default
       containers:
         - name: coredns
           image: coredns/coredns:1.11.2
@@ -20,8 +22,10 @@ spec:
           ports:
             - containerPort: 53
               protocol: UDP
+              hostPort: 53
             - containerPort: 53
               protocol: TCP
+              hostPort: 53
           volumeMounts:
             - name: config-volume
               mountPath: /etc/coredns
