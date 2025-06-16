@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/brandongraves08/homelab.git
     targetRevision: HEAD
-    path: openshift/extras/apps
+    path: openshift/extras
   destination:
     server: https://kubernetes.default.svc
     namespace: openshift-gitops
