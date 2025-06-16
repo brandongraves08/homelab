@@ -1,0 +1,4 @@
+resources:
+  - homelab-base.yaml
+  - homelab-argocd.yaml
+  - homelab-extras.yaml
