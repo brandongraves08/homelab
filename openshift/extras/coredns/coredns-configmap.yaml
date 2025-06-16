@@ -11,7 +11,7 @@ data:
     homelab.lan:53 {
         errors
         log
-        rewrite name regex (.*)\.homelab\.lan {1}.apps.$CLUSTER_DOMAIN
+        rewrite name regex (.*)\.homelab\.lan {1}.apps.openshift.thelab.lan
         forward . 192.168.2.1
         cache 30
     }
