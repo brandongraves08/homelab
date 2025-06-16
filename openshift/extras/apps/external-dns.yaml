@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: external-dns
+  namespace: openshift-gitops
+spec:
+  project: homelab-extras
+  source:
+    repoURL: https://charts.bitnami.com/bitnami
+    chart: external-dns
+    targetRevision: 6.15.2
+    helm:
+      values: |
+        provider: cloudflare
+        cloudflare:
+          apiToken: "${CLOUDFLARE_API_TOKEN}"
+        domainFilters:
+          - homelab.lan
+        txtOwnerId: openshift
+        policy: upsert-only
+        serviceAccount:
+          create: true
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: external-dns
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
