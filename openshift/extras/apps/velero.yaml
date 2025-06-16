@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: velero
+  namespace: openshift-gitops
+spec:
+  project: homelab-extras
+  source:
+    repoURL: https://vmware-tanzu.github.io/helm-charts
+    chart: velero
+    targetRevision: 5.3.2
+    helm:
+      values: |
+        configuration:
+          backupStorageLocation:
+            - name: nfs
+              provider: aws
+              bucket: homelab-pvc-backups
+              config:
+                region: us-east-1
+        snapshotsEnabled: false
+        initContainers: []
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: velero
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
