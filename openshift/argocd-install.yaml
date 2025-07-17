@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ArgoCD
+metadata:
+  name: argocd
+  namespace: argocd
+spec:
+  server:
+    route:
+      enabled: true
+  repo:
+    volumes:
+      - name: repo-data
+        persistentVolumeClaim:
+          claimName: argocd-repo-server-pvc
+  redis:
+    volumes:
+      - name: redis-data
+        persistentVolumeClaim:
+          claimName: argocd-redis-pvc
+  applicationSet:
+    volumes:
+      - name: appset-data
+        persistentVolumeClaim:
+          claimName: argocd-applicationset-pvc

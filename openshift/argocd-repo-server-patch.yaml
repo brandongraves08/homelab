@@ -1,0 +1,14 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: argocd-repo-server
+  namespace: argocd
+spec:
+  template:
+    spec:
+      volumes:
+      - name: repos
+        persistentVolumeClaim:
+          claimName: argocd-repo-server-pvc
+      - name: tmp
+        emptyDir: {}

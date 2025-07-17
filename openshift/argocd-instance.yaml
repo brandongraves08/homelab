@@ -1,0 +1,45 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ArgoCD
+metadata:
+  name: argocd
+  namespace: argocd
+spec:
+  server:
+    route:
+      enabled: true
+  repo:
+    resources:
+      limits:
+        cpu: "1"
+        memory: 1Gi
+      requests:
+        cpu: 250m
+        memory: 256Mi
+    volumeMounts:
+    - mountPath: /tmp
+      name: tmp-dir
+    - mountPath: /home/argocd/cmp-server/plugins
+      name: plugins
+    volumes:
+    - emptyDir: {}
+      name: tmp-dir
+    - emptyDir: {}
+      name: plugins
+    - name: repo-data
+      persistentVolumeClaim:
+        claimName: argocd-repo-server-pvc
+  redis:
+    resources:
+      limits:
+        cpu: 500m
+        memory: 256Mi
+      requests:
+        cpu: 250m
+        memory: 128Mi
+    volumeMounts:
+    - mountPath: /redis-data
+      name: redis-data
+    volumes:
+    - name: redis-data
+      persistentVolumeClaim:
+        claimName: argocd-redis-pvc
