@@ -1,0 +1,4 @@
+resources:
+  - coredns-deployment.yaml
+  - coredns-service.yaml
+  - coredns-configmap.yaml
